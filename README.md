@@ -72,17 +72,24 @@ Detection Logic & Correlation
   - conn.log
   - dns.log
   - http.log
+
 - **Suricata**
+
   - Flow events
   - Alert events
 
 ### Endpoint Telemetry
+
 - **Sysmon**
+
   - Event ID 1 (Process Creation)
+
 - **Windows Security Logs**
+
   - Event ID 4688 (Process Creation)
 
 ### SIEM & Analysis
+
 - **Splunk Enterprise**
 - **SPL (Search Processing Language)**
 
@@ -102,6 +109,7 @@ Detection Logic & Correlation
 - Suricata `flow` events
 
 **Detection Strategy**
+
 - High connection fan-out from a single source
 - Short-lived TCP sessions
 - Unusual destination port distribution
@@ -127,11 +135,11 @@ Why This Matters
 Common Living-off-the-Land Binary (LOLBin) abuse technique
 
 Telemetry Sources
-
+```
 Sysmon Event ID 1
 
 Windows Security Event ID 4688
-
+```
 Detection Strategy
 
 Command-line argument inspection
