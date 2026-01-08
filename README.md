@@ -1,194 +1,178 @@
-# SOC-Detection-Engineering-Lab
-End-to-end SOC detection engineering lab correlating network (Zeek, Suricata) and endpoint (Sysmon, Windows Event Logs) telemetry in Splunk to detect reconnaissance and PowerShell-based defense evasion mapped to MITRE ATT&amp;CK.
+# 🛡️ SOC Detection Engineering Lab
 
-🛡️ SOC Detection Engineering Lab
+**SOC-Detection-Engineering-Lab**
 
-Author: Solomon James
-Role Target: SOC Analyst / Detection Engineer
-Focus: Network + Endpoint Telemetry Correlation in Splunk
-Frameworks: MITRE ATT&CK, Detection Engineering Lifecycle
+End-to-end SOC detection engineering lab correlating **network telemetry** (Zeek, Suricata) and **endpoint telemetry** (Sysmon, Windows Event Logs) in **Splunk** to detect reconnaissance and PowerShell-based defense evasion techniques mapped to **MITRE ATT&CK**.
 
-📌 Overview
+---
 
-This repository documents an end-to-end SOC Detection Engineering lab designed to simulate how modern blue teams detect adversary behavior by correlating network telemetry (Zeek, Suricata) with endpoint telemetry (Sysmon, Windows Event Logs) inside Splunk.
+## 👤 Author & Focus
 
-Rather than focusing on alerts alone, this lab emphasizes:
+**Author:** Solomon James  
+**Target Role:** SOC Analyst / Detection Engineer  
+**Primary Focus:** Network + Endpoint Telemetry Correlation  
+**Frameworks:** MITRE ATT&CK, Detection Engineering Lifecycle  
 
-Signal generation
+---
 
-Log fidelity
+## 📌 Overview
 
-Detection logic
+This repository documents an **end-to-end SOC Detection Engineering lab** designed to emulate how modern enterprise blue teams identify and investigate adversary behavior through **cross-sensor correlation**.
 
-Cross-sensor correlation
+Rather than focusing solely on alert generation, this lab emphasizes the full detection engineering workflow, including:
 
-ATT&CK-mapped detections
+- Signal generation and validation  
+- Log quality and telemetry fidelity  
+- Detection logic development  
+- Cross-sensor correlation (network + endpoint)  
+- MITRE ATT&CK–aligned detections  
 
-This project reflects real-world SOC workflows, not CTF-style exercises.
+This project is intentionally structured to reflect **real-world SOC operations**, not CTF-style exercises or isolated detections.
 
+---
 
+## 🎯 Objectives
 
-🎯 Objectives
+- Build a realistic SOC lab with **multiple telemetry sources**
+- Detect **reconnaissance** and **defense evasion** behaviors
+- Correlate **endpoint and network activity** in Splunk
+- Map detections to **MITRE ATT&CK techniques**
+- Produce **resume- and interview-ready detection evidence**
 
-Build a realistic SOC lab with multiple telemetry sources
+---
 
-Detect reconnaissance and defense evasion techniques
+## 🏗️ Architecture
 
-Correlate endpoint + network data in Splunk
+### Core Components
 
-Map detections to MITRE ATT&CK
+- **Attack Host:** Kali Linux  
+- **Endpoint:** Windows 10 (Sysmon + Windows Security Logs)  
+- **Network Sensor:** Ubuntu Server (Zeek + Suricata)  
+- **SIEM:** Splunk Enterprise  
 
-Produce resume- and interview-ready evidence
-
-
-🏗️ Architecture
-
-Core Components:
-
-Attack Host: Kali Linux
-
-Endpoint: Windows 10 (Sysmon + Windows Security Logs)
-
-Network Sensor: Ubuntu Server (Zeek + Suricata)
-
-SIEM: Splunk Enterprise
-
-Telemetry Flow:
+### Telemetry Flow
 
 Kali / Windows Activity
-        ↓
+↓
 Zeek / Suricata / Sysmon
-        ↓
+↓
 Splunk Indexers
-        ↓
+↓
 Detection Logic & Correlation
 
-A full architecture diagram is included in /architecture/.
 
+📎 A detailed architecture diagram is included in the `/architecture/` directory.
 
-🧰 Tools & Technologies
-Network Telemetry
+---
 
-Zeek
+## 🧰 Tools & Technologies
 
-conn.log
+### Network Telemetry
+- **Zeek**
+  - conn.log
+  - dns.log
+  - http.log
+- **Suricata**
+  - Flow events
+  - Alert events
 
-dns.log
+### Endpoint Telemetry
+- **Sysmon**
+  - Event ID 1 (Process Creation)
+- **Windows Security Logs**
+  - Event ID 4688 (Process Creation)
 
-http.log
+### SIEM & Analysis
+- **Splunk Enterprise**
+- **SPL (Search Processing Language)**
 
-Suricata
+---
 
-flow events
+## 🧪 Detection Scenarios
 
-alert events
+### 1️⃣ Network Reconnaissance
 
-Endpoint Telemetry
+**Techniques Detected**
+- TCP SYN scanning
+- Service enumeration
+- Port scanning behavior
 
-Sysmon
+**Telemetry Sources**
+- Zeek `conn.log`
+- Suricata `flow` events
 
-Event ID 1 (Process Creation)
+**Detection Strategy**
+- High connection fan-out from a single source
+- Short-lived TCP sessions
+- Unusual destination port distribution
 
-Windows Security Logs
+**MITRE ATT&CK Mapping**
+- `T1046 – Network Service Scanning`
 
-Event ID 4688
+---
 
-SIEM & Analysis
+### 2️⃣ PowerShell Defense Evasion
 
-Splunk Enterprise
-
-SPL (Search Processing Language)
-
-
-🧪 Detection Scenarios
-1️⃣ Network Reconnaissance
-
-Techniques Detected:
-
-TCP SYN scans
-
-Service enumeration
-
-Port scanning behavior
-
-Telemetry Used:
-
-Zeek conn.log
-
-Suricata flow events
-
-Detection Strategy:
-
-High connection fan-out
-
-Short-lived TCP sessions
-
-Unusual destination port patterns
-
-MITRE Mapping:
-
-T1046 – Network Service Scanning
-
-
-2️⃣ PowerShell Defense Evasion
-
-Attack Simulation:
+**Attack Simulation**
+```powershell
 powershell.exe -nop -w hidden -c "Get-Process | Out-File C:\Users\Public\ps_test.txt"
+```
 
-Why This Matters:
+Why This Matters
 
--nop bypasses profiles
+-nop bypasses PowerShell profiles
 
 -w hidden suppresses user visibility
 
-Common LOLBin abuse technique
+Common Living-off-the-Land Binary (LOLBin) abuse technique
 
-Telemetry Used:
+Telemetry Sources
 
 Sysmon Event ID 1
 
 Windows Security Event ID 4688
 
-Detection Strategy:
+Detection Strategy
 
-Command-line inspection
+Command-line argument inspection
 
 Parent/child process analysis
 
-Hidden window execution flags
+Detection of hidden execution flags
 
-MITRE Mapping:
+MITRE ATT&CK Mapping
 
 T1059.001 – PowerShell
 
 TA0005 – Defense Evasion
 
 
-🔍 Example Detection Logic (SPL)
 
+🔍 Example Detection Logic (Splunk SPL)
+
+```
 index=main sourcetype=XmlWinEventLog:Microsoft-Windows-Sysmon/Operational EventCode=1
 | search Image="*powershell.exe*" CommandLine="*-nop*"
 | table _time host User Image CommandLine ParentImage
-
+```
 
 🔗 Cross-Sensor Correlation
 
-One of the key goals of this lab is proving correlation, not isolated alerts.
+A core objective of this lab is demonstrating correlation, not isolated alerts.
 
 Examples include:
 
-Same source IP observed in Zeek + Suricata
+Identical source IPs observed across Zeek and Suricata
 
-Endpoint execution linked to prior network activity
+Endpoint PowerShell execution following prior network activity
 
-Timeline reconstruction across sensors
+Timeline reconstruction across multiple sensors
 
-This mirrors how enterprise SOCs reduce false positives and improve confidence.
-
+This mirrors how enterprise SOCs improve detection confidence and reduce false positives.
 
 📁 Repository Structure
-
-soc-detection-engineering-lab/
+```
+SOC-Detection-Engineering-Lab/
 ├── README.md
 ├── architecture/
 │   └── soc_architecture_diagram.png
@@ -199,4 +183,17 @@ soc-detection-engineering-lab/
 │   ├── splunk_searches/
 │   └── attack_execution/
 └── notes/
+```
+🧠 Key Takeaways
 
+Detection engineering prioritizes signal quality over alert volume
+
+Correlating network and endpoint telemetry increases confidence
+
+MITRE ATT&CK provides structure, not detections by itself
+
+Strong detections require understanding attacker behavior and telemetry context
+
+📜 License
+
+This project is licensed under the MIT License.
