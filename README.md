@@ -13,6 +13,13 @@ End-to-end SOC detection engineering lab correlating **network telemetry** (Zeek
 **Primary Focus:** Network + Endpoint Telemetry Correlation  
 **Frameworks:** MITRE ATT&CK, Detection Engineering Lifecycle  
 
+## 🎯 Detection Coverage
+
+| Category | Technique | Data Sources |
+|--------|----------|-------------|
+| Network Reconnaissance | T1046 | Zeek, Suricata |
+| PowerShell Defense Evasion | T1059.001 | Sysmon, Windows Security Logs |
+
 ---
 
 ## 📌 Overview
