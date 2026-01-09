@@ -201,15 +201,6 @@ SOC-Detection-Engineering-Lab/
 │   └── attack_execution/
 └── notes/
 ```
-Key Takeaways
-
-Detection engineering prioritizes signal quality over alert volume
-
-Correlating network and endpoint telemetry increases confidence
-
-MITRE ATT&CK provides structure, not detections by itself
-
-Strong detections require understanding attacker behavior and telemetry context
 
 📜 License
 
